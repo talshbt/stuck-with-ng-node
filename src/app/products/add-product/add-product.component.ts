@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductsStore } from '../store/products.store';
 
 @Component({
   selector: 'app-add-product',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddProductComponent implements OnInit {
 
-  constructor() { }
 
   ngOnInit(): void {
   }
 
+
+  constructor(private readonly productsStore: ProductsStore) {}
+
+
+  onAddPost(post){
+    this.productsStore.add$(post.value)
+  }
 }

@@ -1,1 +1,4 @@
 <p>products works!</p>
+<li *ngFor="let product of (products$ | async)">
+  {{ product|json }}
+</li>
