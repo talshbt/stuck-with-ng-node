@@ -9,6 +9,7 @@ import { AddProductComponent } from './products/add-product/add-product.componen
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { ProductComponent } from './products/product/product.component';
 
 @NgModule({
   declarations: [
@@ -16,14 +17,15 @@ import { MaterialModule } from './material.module';
     HeaderComponent,
     ProductsComponent,
     AddProductComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
