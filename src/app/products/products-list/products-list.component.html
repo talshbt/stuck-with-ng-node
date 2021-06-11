@@ -1,5 +1,17 @@
-<div *ngIf="(products$ | async).length as products">
+<!-- <div *ngIf="(products$ | async).length as products">
   <li *ngFor="let product of (products$ | async)">
     <app-product [product]="product"></app-product>
   </li>
 </div>
+ -->
+
+ <div *ngIf="(products$ | async).length as products">
+
+<mat-accordion *ngFor="let product of (products$ | async)" >
+
+  <app-product [product]="product"></app-product>
+
+
+</mat-accordion>
+ </div>
+<!-- <p class="info-text mat-body-1" *ngIf="posts.length <= 0">No posts added yet!</p> -->
