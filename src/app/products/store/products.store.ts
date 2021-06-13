@@ -2,11 +2,10 @@ import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { Observable } from "rxjs";
 import { Product } from "../product.model";
-import { ProductService } from "../product.service";
 
 export interface ProductsState  {
   products: Product[];
-  currentId : number;
+  currentId : string;
 }
 
 
@@ -14,12 +13,12 @@ export interface ProductsState  {
   providedIn: 'root'
 })
 export class ProductsStore extends ComponentStore<ProductsState> {
-  constructor(private productService:ProductService) {
-    super({products: [], currentId : 0});
+  constructor() {
+    super({products: [], currentId : '0'});
   }
 
 
-  readonly initProducts$ = this.updater(
+  readonly getProducts$ = this.updater(
     (state: ProductsState, products: Product[]) => {
       state.products = products
         return {
@@ -31,8 +30,8 @@ export class ProductsStore extends ComponentStore<ProductsState> {
 
   readonly add$ = this.updater(
       (state: ProductsState, product: Product) => {
-        state.currentId++;
-        product.id = state.currentId;
+        // state.currentId++;
+        // product.id = state.currentId;
         state.products.push(product)
           return {
               ...state,
@@ -43,7 +42,6 @@ export class ProductsStore extends ComponentStore<ProductsState> {
 
   readonly remove$ = this.updater(
     (state: ProductsState, product: Product) => {
-      //  state.products.splice(product)
       var find = state.products.indexOf(state.products.find(prod=> prod.id === product.id))
        state.products.splice(find, 1)
 
@@ -54,7 +52,7 @@ export class ProductsStore extends ComponentStore<ProductsState> {
     }
 );
   readonly products$: Observable<any> = this.select((state) => state.products);
-  readonly currentId$: Observable<number> = this.select((state) => state.currentId);
+  readonly currentId$: Observable<string> = this.select((state) => state.currentId);
 
 
 }

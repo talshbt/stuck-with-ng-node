@@ -17,9 +17,10 @@ export class AppComponent {
   products$ = this.productsStore.products$;
 
   constructor(private readonly productsStore: ProductsStore, private productService:ProductService) {
-    this.productService.getPosts().subscribe(products=>{
-      console.log(products)
-     this.productsStore.initProducts$(products)
-    })
+    this.productService.getProducts();
+    // this.productService.getProducts().subscribe(products=>{
+    //   // console.log(products)
+    //  this.productsStore.getProducts$(products);
+    // })
   }
 }

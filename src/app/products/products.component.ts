@@ -9,20 +9,16 @@ import { ProductsStore } from './store/products.store';
   providers: [ProductsStore],
 })
 export class ProductsComponent implements OnInit {
+  ngOnInit(): void {}
 
+  // products$ = this.productsStore.products$;
 
-  ngOnInit(): void {
-  }
-
-  products$ = this.productsStore.products$;
-
-  constructor(private readonly productsStore: ProductsStore, private productService:ProductService) {
-    this.productService.getPosts().subscribe(products=>{
-      console.log(products)
-     this.productsStore.initProducts$(products)
-    })
-  }
-
-
-
+  // constructor(
+  //   private readonly productsStore: ProductsStore,
+  //   private productService: ProductService
+  // ) {
+  //   this.productService.getProducts().subscribe((products) => {
+  //     this.productsStore.initProducts$(products);
+  //   });
+  // }
 }
