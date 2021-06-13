@@ -68,28 +68,28 @@ router.post("", (req, res, next) => {
 });
 
 router.delete("/:id", (req, res, next) => {
-    prodInd = mockProducts.indexOf(mockProducts.filter(prod=>prod.id !== req.params.id));
-    mockProducts.splice(prodInd, 1)
-    res.status(200).json({ message: "Post deleted!" });
+  prodInd = mockProducts.indexOf(
+    mockProducts.filter((prod) => prod.id !== req.params.id)
+  );
+  mockProducts.splice(prodInd, 1);
+  res.status(200).json({ message: "Post deleted!" });
 });
 
 router.get("/:id", (req, res, next) => {
-  product = mockProducts.find(prod=>prod.id == req.params.id);
+  product = mockProducts.find((prod) => prod.id == req.params.id);
   res.status(201).json({
     message: "Post successfully",
     product: product,
   });
 });
 router.put("/:id", (req, res, next) => {
-  // mockProducts.forEach(x=>{
-  //   console.log(x.id===req.body.id )
-  // })
-     prodInd = mockProducts.indexOf(mockProducts.find(prod=>prod.id == req.params.id));
-     console.log(prodInd)
-       mockProducts[prodInd] = req.body
-      // console.log(mockProducts)
-    res.status(200).json({ message: "Update successful!" });
-  // });
+  prodInd = mockProducts.indexOf(
+    mockProducts.find((prod) => prod.id == req.params.id)
+  );
+  console.log(prodInd);
+  mockProducts[prodInd] = req.body;
+  res.status(200).json({ message: "Update successful!" });
+
 });
 
 module.exports = router;
