@@ -3,7 +3,7 @@ const express = require("express");
 // const Post = require("../models/post");
 
 const router = express.Router();
-var id = 0;
+var id = 2;
 // router.post("", (req, res, next) => {
 //   const post = new Post({
 //     title: req.body.title,
@@ -45,8 +45,8 @@ var id = 0;
 //   });
 // });
 var mockProducts = [
-  { title: "tal", content: "flight", id: null },
-  { title: "eran", content: "flight", id: null },
+  { title: "tal", content: "flight", id: 0 },
+  { title: "eran", content: "flight", id: 1 },
 ];
 
 router.get("", (req, res, next) => {
@@ -57,16 +57,26 @@ router.get("", (req, res, next) => {
 });
 
 router.post("", (req, res, next) => {
-
-    console.log(req.body)
-    product = req.body;
-    product['productId'] = id++;
-    mockProducts.push(product)
-    res.status(201).json({
-      message: "Post added successfully",
-      productId: id++
-    });
+  console.log(req.body);
+  product = req.body;
+  product["productId"] = id++;
+  mockProducts.push(product);
+  res.status(201).json({
+    message: "Post added successfully",
+    productId: id++,
   });
+});
 
+router.delete("/:id", (req, res, next) => {
+  // Post.deleteOne({ _id: req.params.id }).then((result) => {
+    // console.log(result);
+    prodInd = mockProducts.indexOf(mockProducts.filter(prod=>prod.id !== req.params.id));
+    mockProducts.splice(prodInd, 1)
+    console.log("prodInd = "  + prodInd)
+
+    console.log(mockProducts)
+    res.status(200).json({ message: "Post deleted!" });
+  // });
+});
 
 module.exports = router;

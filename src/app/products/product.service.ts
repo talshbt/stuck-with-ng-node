@@ -48,11 +48,23 @@ export class ProductService {
       )
       .subscribe((responseData) => {
         const id = responseData.productId;
-        console.log(id)
-        this.productsStore.add$(product);
+        // console.log(id)
+        // this.productsStore.add$(product);
         this.getProducts();
         this.router.navigate(['/'], { relativeTo: this.route });
 
       });
+  }
+
+  removeProduct(productId:string){
+    this.http
+    .delete("http://localhost:3000/api/products/" + productId)
+    .subscribe(() => {
+      this.getProducts();
+      // const updatedPosts = this.posts.filter(product => product.id !== productId);
+      // this.posts = updatedPosts;
+      // this.postsUpdated.next([...this.posts]);
+    });
+// }
   }
 }

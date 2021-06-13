@@ -5,7 +5,7 @@ import { Product } from "../product.model";
 
 export interface ProductsState  {
   products: Product[];
-  currentId : string;
+  // currentId : string;
 }
 
 
@@ -14,9 +14,8 @@ export interface ProductsState  {
 })
 export class ProductsStore extends ComponentStore<ProductsState> {
   constructor() {
-    super({products: [], currentId : '0'});
+    super({products: []});
   }
-
 
   readonly getProducts$ = this.updater(
     (state: ProductsState, products: Product[]) => {
@@ -28,31 +27,31 @@ export class ProductsStore extends ComponentStore<ProductsState> {
     }
 );
 
-  readonly add$ = this.updater(
-      (state: ProductsState, product: Product) => {
-        // state.currentId++;
-        // product.id = state.currentId;
-        state.products.push(product)
-          return {
-              ...state,
-               products: state.products,
-          };
-      }
-  );
+//   readonly add$ = this.updater(
+//       (state: ProductsState, product: Product) => {
+//         // state.currentId++;
+//         // product.id = state.currentId;
+//         state.products.push(product)
+//           return {
+//               ...state,
+//                products: state.products,
+//           };
+//       }
+//   );
 
-  readonly remove$ = this.updater(
-    (state: ProductsState, product: Product) => {
-      var find = state.products.indexOf(state.products.find(prod=> prod.id === product.id))
-       state.products.splice(find, 1)
+//   readonly remove$ = this.updater(
+//     (state: ProductsState, product: Product) => {
+//       var find = state.products.indexOf(state.products.find(prod=> prod.id === product.id))
+//        state.products.splice(find, 1)
 
-        return {
-            ...state,
-             products: state.products,
-        };
-    }
-);
+//         return {
+//             ...state,
+//              products: state.products,
+//         };
+//     }
+// );
   readonly products$: Observable<any> = this.select((state) => state.products);
-  readonly currentId$: Observable<string> = this.select((state) => state.currentId);
+  // readonly currentId$: Observable<string> = this.select((state) => state.currentId);
 
 
 }

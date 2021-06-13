@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '../product.model';
-import { ProductsStore } from '../store/products.store';
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product',
@@ -9,12 +9,14 @@ import { ProductsStore } from '../store/products.store';
 })
 export class ProductComponent implements OnInit {
   @Input() product:Product;
-  constructor(private readonly productsStore: ProductsStore) {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
   }
 
   onRemove(){
-    this.productsStore.remove$(this.product)
+    console.log('on remove')
+    this.productService.removeProduct(this.product.id + '')
+    // this.productsStore.remove$(this.product)
   }
 }
