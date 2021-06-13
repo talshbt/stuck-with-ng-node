@@ -80,6 +80,7 @@ export class ProductService {
         product
       ).subscribe(data=>{
         this.getProducts();
+        this.router.navigate(['/'], { relativeTo: this.route });
       })
 
   }
