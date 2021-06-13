@@ -47,9 +47,4 @@ export class ProductsStore extends ComponentStore<ProductsState> {
   readonly currentId$: Observable<number> = this.select((state) => state.currentId);
 
 
-
-  // readonly add = this.updater((state, product) => ({ products$: state.products.push(product) }));
-
-
-
 }
