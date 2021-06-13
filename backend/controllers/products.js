@@ -3,7 +3,7 @@ const express = require("express");
 // const Post = require("../models/post");
 
 const router = express.Router();
-
+var id = 0;
 // router.post("", (req, res, next) => {
 //   const post = new Post({
 //     title: req.body.title,
@@ -55,5 +55,24 @@ router.get("", (req, res, next) => {
     posts: mockProducts,
   });
 });
+
+router.post("", (req, res, next) => {
+  // const post = new Post({
+  //   title: req.body.title,
+  //   content: req.body.content
+  // });
+  // post.save().then(createdPost => {
+    console.log(req.body)
+    product = req.body;
+    product['productId'] = id++;
+    mockProducts.push(product)
+    // console.log(product)
+    res.status(201).json({
+      message: "Post added successfully",
+      productId: id++
+    });
+  });
+// });
+
 
 module.exports = router;

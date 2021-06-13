@@ -34,12 +34,13 @@ export class ProductService {
           });
         })
       ).subscribe(products=>{
+        console.log(products)
         this.productsStore.getProducts$(products);
       })
   }
 
-  addProduct(title: string, content: string) {
-    const product: Product = { id: null, title: title, content: content };
+  addProduct(product: Product) {
+    // const product: Product = { id: null, title: title, content: content };
     this.http
       .post<{ message: string; productId: string }>(
         'http://localhost:3000/api/products',
@@ -47,6 +48,7 @@ export class ProductService {
       )
       .subscribe((responseData) => {
         const id = responseData.productId;
+        console.log(id)
         this.productsStore.add$(product);
         this.getProducts();
         this.router.navigate(['/'], { relativeTo: this.route });
