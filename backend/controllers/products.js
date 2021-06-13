@@ -1,6 +1,6 @@
 const express = require("express");
 
-// const Post = require("../models/post");
+const product = require("../models/product");
 
 const router = express.Router();
 var id = 2;
