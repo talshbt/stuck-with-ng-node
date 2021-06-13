@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsStore } from '../store/products.store';
 
 @Component({
@@ -13,11 +14,12 @@ export class AddProductComponent implements OnInit {
   }
 
 
-  constructor(private readonly productsStore: ProductsStore) {}
+  constructor(private readonly productsStore: ProductsStore, public route: ActivatedRoute,  private router: Router) {}
 
 
   onAddPost(post){
-    console.log("????")
     this.productsStore.add$(post.value)
+     this.router.navigate(['/'], { relativeTo: this.route });
+
   }
 }
