@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { Observable } from "rxjs";
 import { Product } from "../product.model";
+import { ProductService } from "../product.service";
 
 export interface ProductsState  {
   products: Product[];
@@ -13,7 +14,7 @@ export interface ProductsState  {
   providedIn: 'root'
 })
 export class ProductsStore extends ComponentStore<ProductsState> {
-  constructor() {
+  constructor(productService:ProductService) {
     super({products: [], currentId : 0});
 
   }
@@ -21,6 +22,7 @@ export class ProductsStore extends ComponentStore<ProductsState> {
   // readonly products$: Observable<Product[]> = this.select(state => state.products);
   readonly add$ = this.updater(
       (state: ProductsState, product: Product) => {
+        console.log('adddddd')
         state.currentId++;
         product.id = state.currentId;
         state.products.push(product)

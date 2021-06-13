@@ -17,6 +17,7 @@ export class AddProductComponent implements OnInit {
 
 
   onAddPost(post){
+    console.log("????")
     this.productsStore.add$(post.value)
   }
 }

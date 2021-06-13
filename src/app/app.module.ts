@@ -4,13 +4,13 @@ import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { ProductsComponent } from './products/products.component';
-import { AddProductComponent } from './products/add-product/add-product.component';
-import { ProductsListComponent } from './products/products-list/products-list.component';
+import { AppRoutingModule } from "./app-routing.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ProductComponent } from './products/product/product.component';
-
+import { ProductsComponent } from './products/products.component';
+import { AddProductComponent } from './products/add-product/add-product.component';
+import { ProductsListComponent } from './products/products-list/products-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +26,7 @@ import { ProductComponent } from './products/product/product.component';
     MaterialModule,
     FormsModule,
     HttpClientModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
