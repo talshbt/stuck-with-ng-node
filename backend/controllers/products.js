@@ -57,22 +57,16 @@ router.get("", (req, res, next) => {
 });
 
 router.post("", (req, res, next) => {
-  // const post = new Post({
-  //   title: req.body.title,
-  //   content: req.body.content
-  // });
-  // post.save().then(createdPost => {
+
     console.log(req.body)
     product = req.body;
     product['productId'] = id++;
     mockProducts.push(product)
-    // console.log(product)
     res.status(201).json({
       message: "Post added successfully",
       productId: id++
     });
   });
-// });
 
 
 module.exports = router;

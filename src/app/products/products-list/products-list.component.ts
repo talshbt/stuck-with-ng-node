@@ -11,7 +11,6 @@ export class ProductsListComponent implements OnInit {
 
   products$ = this.productsStore.products$;
   constructor(private readonly productsStore: ProductsStore) {
-
   }
 
   ngOnInit(): void {
