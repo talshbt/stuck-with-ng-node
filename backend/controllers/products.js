@@ -68,12 +68,17 @@ router.post("", (req, res, next) => {
 });
 
 router.delete("/:id", (req, res, next) => {
-  // Post.deleteOne({ _id: req.params.id }).then((result) => {
-    // console.log(result);
     prodInd = mockProducts.indexOf(mockProducts.filter(prod=>prod.id !== req.params.id));
     mockProducts.splice(prodInd, 1)
     res.status(200).json({ message: "Post deleted!" });
-  // });
+});
+
+router.get("/:id", (req, res, next) => {
+  product = mockProducts.filter(prod=>prod.id == req.params.id)[0];
+  res.status(201).json({
+    message: "Post successfully",
+    product: product,
+  });
 });
 
 module.exports = router;

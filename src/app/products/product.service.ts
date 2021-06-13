@@ -33,10 +33,11 @@ export class ProductService {
             };
           });
         })
-      ).subscribe(products=>{
-        console.log(products)
+      )
+      .subscribe((products) => {
+        console.log(products);
         this.productsStore.getProducts$(products);
-      })
+      });
   }
 
   addProduct(product: Product) {
@@ -49,15 +50,26 @@ export class ProductService {
         const id = responseData.productId;
         this.getProducts();
         this.router.navigate(['/'], { relativeTo: this.route });
-
       });
   }
 
-  removeProduct(productId){
+  removeProduct(productId) {
     this.http
-    .delete("http://localhost:3000/api/products/" + productId)
-    .subscribe(() => {
-      this.getProducts();
-    });
+      .delete('http://localhost:3000/api/products/' + productId)
+      .subscribe(() => {
+        this.getProducts();
+      });
+  }
+
+  getProduct(productId: string) {
+    return this.http
+      .get<{ message: string; product: any }>(
+        'http://localhost:3000/api/products/' + productId
+      )
+      .pipe(
+        map((productData) => {
+          return productData.product;
+        })
+      );
   }
 }
