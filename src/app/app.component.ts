@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ProductService } from './products/product.service';
+import { ProductsStore } from './products/store/products.store';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'post';
+
+
+  ngOnInit(): void {
+  }
+
+  products$ = this.productsStore.products$;
+
+  constructor(private readonly productsStore: ProductsStore, private productService:ProductService) {
+    this.productService.getPosts().subscribe(products=>{
+      console.log(products)
+     this.productsStore.initProducts$(products)
+    })
+  }
 }

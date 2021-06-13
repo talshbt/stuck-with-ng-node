@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from './product.service';
 import { ProductsStore } from './store/products.store';
 
 @Component({
@@ -12,9 +13,15 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   products$ = this.productsStore.products$;
 
-  constructor(private readonly productsStore: ProductsStore) {}
+  constructor(private readonly productsStore: ProductsStore, private productService:ProductService) {
+    this.productService.getPosts().subscribe(products=>{
+      console.log(products)
+     this.productsStore.initProducts$(products)
+    })
+  }
 
 
 

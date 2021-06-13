@@ -11,9 +11,7 @@ export class ProductsListComponent implements OnInit {
 
   products$ = this.productsStore.products$;
   constructor(private readonly productsStore: ProductsStore) {
-    this.productsStore.select(state=>state.products).subscribe(x=>{
-      console.log(x)
-    })
+
   }
 
   ngOnInit(): void {

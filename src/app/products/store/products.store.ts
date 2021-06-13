@@ -18,13 +18,19 @@ export class ProductsStore extends ComponentStore<ProductsState> {
     super({products: [], currentId : 0});
   }
 
-  // readonly products$: Observable<Product[]> = this.select(state => state.products);
 
-
+  readonly initProducts$ = this.updater(
+    (state: ProductsState, products: Product[]) => {
+      state.products = products
+        return {
+            ...state,
+             products: products,
+        };
+    }
+);
 
   readonly add$ = this.updater(
       (state: ProductsState, product: Product) => {
-        this.productService.getPosts();
         state.currentId++;
         product.id = state.currentId;
         state.products.push(product)

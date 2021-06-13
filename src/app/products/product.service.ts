@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 export class ProductService {
   constructor(private http: HttpClient, private router: Router) {}
   getPosts() {
-    this.http
+   return this.http
       .get<{ message: string; posts: any }>(
         'http://localhost:3000/api/products'
       )
@@ -24,8 +24,8 @@ export class ProductService {
           });
         })
       )
-      .subscribe((transformedProducts) => {
-        console.log(transformedProducts);
-      });
+      // .subscribe((transformedProducts) => {
+      //   console.log(transformedProducts);
+      // });
   }
 }
