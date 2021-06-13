@@ -14,15 +14,17 @@ export interface ProductsState  {
   providedIn: 'root'
 })
 export class ProductsStore extends ComponentStore<ProductsState> {
-  constructor(productService:ProductService) {
+  constructor(private productService:ProductService) {
     super({products: [], currentId : 0});
-
   }
 
   // readonly products$: Observable<Product[]> = this.select(state => state.products);
+
+
+
   readonly add$ = this.updater(
       (state: ProductsState, product: Product) => {
-        console.log('adddddd')
+        this.productService.getPosts();
         state.currentId++;
         product.id = state.currentId;
         state.products.push(product)

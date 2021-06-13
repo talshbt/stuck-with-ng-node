@@ -1,5 +1,9 @@
-<div class="products-list" *ngIf="(products$ | async).length as products">
+<div class="products-list" *ngIf="(products$ | async).length as products; else empty">
   <mat-accordion *ngFor="let product of products$ | async">
     <app-product [product]="product"></app-product>
   </mat-accordion>
 </div>
+<ng-template #empty>
+  <div>No Products Yet</div>
+</ng-template>
+<div *ngIf="(products$ | async).length">{{(products$ | async)|json}}</div>
