@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, NgForm } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
@@ -33,7 +34,15 @@ export class AddProductComponent implements OnInit {
     public route: ActivatedRoute
   ) {}
 
-  onAddPost(post) {
-    this.productService.addProduct(post.value);
+  onAddPost(form: NgForm) {
+    if(form.valid){
+      if(this.product){
+        this.productService.editProduct(this.productId, form.value)
+        console.log('edit')
+      }else{
+        this.productService.addProduct(form.value);
+        console.log('add')
+      }
+    }
   }
 }

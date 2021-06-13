@@ -74,11 +74,22 @@ router.delete("/:id", (req, res, next) => {
 });
 
 router.get("/:id", (req, res, next) => {
-  product = mockProducts.filter(prod=>prod.id == req.params.id)[0];
+  product = mockProducts.find(prod=>prod.id == req.params.id);
   res.status(201).json({
     message: "Post successfully",
     product: product,
   });
+});
+router.put("/:id", (req, res, next) => {
+  // mockProducts.forEach(x=>{
+  //   console.log(x.id===req.body.id )
+  // })
+     prodInd = mockProducts.indexOf(mockProducts.find(prod=>prod.id == req.params.id));
+     console.log(prodInd)
+       mockProducts[prodInd] = req.body
+      // console.log(mockProducts)
+    res.status(200).json({ message: "Update successful!" });
+  // });
 });
 
 module.exports = router;
