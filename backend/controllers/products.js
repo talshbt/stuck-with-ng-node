@@ -72,9 +72,6 @@ router.delete("/:id", (req, res, next) => {
     // console.log(result);
     prodInd = mockProducts.indexOf(mockProducts.filter(prod=>prod.id !== req.params.id));
     mockProducts.splice(prodInd, 1)
-    console.log("prodInd = "  + prodInd)
-
-    console.log(mockProducts)
     res.status(200).json({ message: "Post deleted!" });
   // });
 });

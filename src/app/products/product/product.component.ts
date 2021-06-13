@@ -15,8 +15,6 @@ export class ProductComponent implements OnInit {
   }
 
   onRemove(){
-    console.log('on remove')
     this.productService.removeProduct(this.product.id + '')
-    // this.productsStore.remove$(this.product)
   }
 }
