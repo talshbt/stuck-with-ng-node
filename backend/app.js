@@ -6,17 +6,24 @@ const postsRoutes = require("./controllers/products");
 
 const app = express();
 
-mongoose
-  .connect(
-    "mongodb+srv://max:QuBqs0T45GDKPlIG@cluster0-ntrwp.mongodb.net/node-angular?retryWrites=true"
-  )
-  .then(() => {
-    console.log("Connected to database!");
-  })
-  .catch(() => {
-    console.log("Connection failed!");
-  });
 
+var db = "mongodb+srv://talp:@FadSJwF98NtMuk@cluster0.vbnc3.mongodb.net/node-angular"
+
+  mongoose.connect(db, {useNewUrlParser: true}, (err) => {
+    if (err)
+        console.error(err);
+    else
+        console.log("Connected to the mongodb");
+});
+
+// const MongoClient = require('mongodb').MongoClient;
+// const uri = "mongodb+srv://talp2:@FadSJwF98NtMuk@cluster0.vbnc3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

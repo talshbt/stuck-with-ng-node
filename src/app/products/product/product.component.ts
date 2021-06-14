@@ -12,9 +12,10 @@ export class ProductComponent implements OnInit {
   constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
+
   }
 
   onRemove(){
-    this.productService.removeProduct(this.product.id + '')
+    this.productService.removeProduct(this.product.id)
   }
 }
