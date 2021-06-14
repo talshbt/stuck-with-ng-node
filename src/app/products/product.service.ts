@@ -73,6 +73,7 @@ export class ProductService {
   }
 
   editProduct(productId: string, product: Product) {
+    console.log(productId)
     return this.http
       .put<{ message: string; product: any }>(
         'http://localhost:3000/api/products/' + productId,
