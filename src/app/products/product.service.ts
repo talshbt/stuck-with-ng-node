@@ -29,13 +29,12 @@ export class ProductService {
             return {
               title: product.title,
               content: product.content,
-              id: product.id,
+              id: product._id,
             };
           });
         })
       )
       .subscribe((products) => {
-        console.log(products);
         this.productsStore.getProducts$(products);
       });
   }

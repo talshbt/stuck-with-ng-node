@@ -1,17 +1,12 @@
 const express = require("express");
 const Product = require("../models/product");
-
 const router = express.Router();
-
-// var mockProducts = [
-//   { title: "tal", content: "flight", id: 0 },
-//   { title: "eran", content: "flight", id: 1 },
-// ];
 
 //get all products
 router.get("", (req, res, next) => {
   Product.find().then((documents) => {
     console.log(documents)
+
     res.status(200).json({
       message: "Posts fetched successfully!",
       products: documents,
@@ -33,12 +28,17 @@ router.post("", (req, res, next) => {
   });
 });
 
+//delete product by id
 router.delete("/:id", (req, res, next) => {
-  prodInd = mockProducts.indexOf(
-    mockProducts.filter((prod) => prod.id !== req.params.id)
-  );
-  mockProducts.splice(prodInd, 1);
-  res.status(200).json({ message: "Post deleted!" });
+  // prodInd = mockProducts.indexOf(
+  //   mockProducts.filter((prod) => prod.id !== req.params.id)
+  // );
+  // mockProducts.splice(prodInd, 1);
+// console.log(req.params.id)
+  Product.deleteOne({_id: req.params.id}).then((result) => {
+    console.log(result);
+    res.status(200).json({ message: "Post deleted!" });
+  });
 });
 
 router.get("/:id", (req, res, next) => {
