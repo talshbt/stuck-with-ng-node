@@ -20,12 +20,12 @@ export class ProductService {
 
   getProducts() {
     return this.http
-      .get<{ message: string; posts: any }>(
+      .get<{ message: string; products: any }>(
         'http://localhost:3000/api/products'
       )
       .pipe(
         map((postData) => {
-          return postData.posts.map((product) => {
+          return postData.products.map((product) => {
             return {
               title: product.title,
               content: product.content,

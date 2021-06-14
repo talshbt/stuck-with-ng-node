@@ -2,20 +2,24 @@ const express = require("express");
 const Product = require("../models/product");
 
 const router = express.Router();
-var id = 2;
 
-var mockProducts = [
-  { title: "tal", content: "flight", id: 0 },
-  { title: "eran", content: "flight", id: 1 },
-];
+// var mockProducts = [
+//   { title: "tal", content: "flight", id: 0 },
+//   { title: "eran", content: "flight", id: 1 },
+// ];
 
+//get all products
 router.get("", (req, res, next) => {
-  res.status(200).json({
-    message: "Posts fetched successfully!",
-    posts: mockProducts,
+  Product.find().then((documents) => {
+    console.log(documents)
+    res.status(200).json({
+      message: "Posts fetched successfully!",
+      products: documents,
+    });
   });
 });
 
+//add new product
 router.post("", (req, res, next) => {
   const product = new Product({
     title: req.body.title,
