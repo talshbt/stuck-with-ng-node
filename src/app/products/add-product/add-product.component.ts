@@ -27,7 +27,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
         .subscribe((paramMap: ParamMap) => {
           if (paramMap.has('productId')) {
             this.isLoading = true
-
             this.productId = paramMap.get('productId');
             this.subscriptions.add(
               this.productService
@@ -41,7 +40,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
             this.productId = null;
             this.product = null;
           }
-        })
+        }),
+
     );
   }
 
