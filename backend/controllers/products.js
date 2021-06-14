@@ -44,32 +44,15 @@ router.get("/:id", (req, res, next) => {
   });
 });
 
-// router.put("/:id", (req, res, next) => {
-//   // prodInd = mockProducts.indexOf(
-//   //   mockProducts.find((prod) => prod.id == req.params.id)
-//   // );
-
-//   const product = new Product({
-//     _id: req.body.id,
-//     title: req.body.title,
-//     content: req.body.content
-//   });
-//   console.log(product)
-//   Product.updateOne({ _id: req.params.id }, product).then((res) => {
-//     res.status(200).json({ message: "product update successful!" });
-//   });
-// });
-
-
-
+//edit product
 router.put("/:id", (req, res, next) => {
   const product = new Product({
     _id: req.params.id,
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
   });
 
-  Product.updateOne({ _id: req.params.id }, product).then(result => {
+  Product.updateOne({ _id: req.params.id }, product).then((result) => {
     res.status(200).json({ message: "Update successful!" });
   });
 });
