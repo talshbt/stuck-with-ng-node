@@ -40,16 +40,16 @@ export class ProductService {
   }
 
   addProduct(product: Product) {
-    this.http
+    return this.http
       .post<{ message: string; productId: string }>(
         'http://localhost:3000/api/products',
         product
       )
-      .subscribe((responseData) => {
-        const id = responseData.productId;
-        this.getProducts();
-        this.router.navigate(['/'], { relativeTo: this.route });
-      });
+      .pipe(
+        map((productData) => {
+          this.getProducts();
+        })
+      );
   }
 
   removeProduct(productId) {
@@ -57,6 +57,8 @@ export class ProductService {
       .delete('http://localhost:3000/api/products/' + productId)
       .subscribe(() => {
         this.getProducts();
+        this.router.navigate(['/'], { relativeTo: this.route });
+
       });
   }
 
@@ -73,15 +75,14 @@ export class ProductService {
   }
 
   editProduct(productId: string, product: Product) {
-    console.log(productId)
-    return this.http
-      .put<{ message: string; product: any }>(
-        'http://localhost:3000/api/products/' + productId,
-        product
-      ).subscribe(data=>{
+    return this.http.put<{ message: string; product: any }>(
+      'http://localhost:3000/api/products/' + productId,
+      product
+    ).pipe(
+      map((productData) => {
         this.getProducts();
         this.router.navigate(['/'], { relativeTo: this.route });
       })
-
+    );
   }
 }
