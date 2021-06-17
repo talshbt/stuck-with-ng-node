@@ -18,6 +18,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
   isLoading = false;
   form: FormGroup;
   fileAttr: 'Choose Image'
+  uploadImage = false;
   private subscriptions = new Subscription();
 
   ngOnInit(): void {
@@ -98,5 +99,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
         );
       }
     }
+  }
+
+  onImagePicked(x){
+    this.uploadImage = true;
+    console.log(x)
   }
 }

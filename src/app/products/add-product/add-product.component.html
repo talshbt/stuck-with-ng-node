@@ -28,8 +28,11 @@
       <button (click)="filePicker.click()" mat-stroked-button type="button">
         <mat-icon>add_a_photo</mat-icon>
       </button>
-      <input type="file" #filePicker />
+      <input (change)="onImagePicked($event)" type="file" #filePicker />
     </div>
+
+    <img *ngIf="uploadImage" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+
     <button mat-raised-button color="accent" type="submit">Save Post</button>
   </mat-card>
 </form>
