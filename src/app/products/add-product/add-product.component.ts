@@ -17,13 +17,17 @@ export class AddProductComponent implements OnInit, OnDestroy {
   product: Product = null;
   isLoading = false;
   form: FormGroup;
-
+  fileAttr: 'Choose Image'
   private subscriptions = new Subscription();
 
   ngOnInit(): void {
     this.createFormGroup();
 
     this.handleAction();
+  }
+
+  uploadFileEvt(file){
+
   }
 
   private createFormGroup() {
