@@ -17,10 +17,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
   product: Product = null;
   isLoading = false;
   form: FormGroup;
-  fileAttr: 'Choose Image'
+  fileAttr: 'Choose Image';
   uploadImage = false;
   private subscriptions = new Subscription();
-  imagePreview:string;
+  imagePreview: string;
 
   ngOnInit(): void {
     this.createFormGroup();
@@ -30,12 +30,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
   private createFormGroup() {
     this.form = new FormGroup({
       title: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)]
+        validators: [Validators.required, Validators.minLength(3)],
       }),
       content: new FormControl(null, { validators: [Validators.required] }),
-       image: new FormControl(null, {
-        validators: [Validators.required]
-       })
+      image: new FormControl(null),
     });
   }
 
@@ -51,7 +49,11 @@ export class AddProductComponent implements OnInit, OnDestroy {
               .pipe(finalize(() => (this.isLoading = false)))
               .subscribe((product) => {
                 this.product = product;
-                this.form.setValue({'title':product.title, 'content':product.content})
+                this.form.setValue({
+                  title: product?.title,
+                  content: product?.content,
+                  image: null,
+                });
               })
           );
         } else {
@@ -72,39 +74,36 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   onAddProduct() {
-    this.isLoading = true;
+
     if (this.form.valid) {
-      if (this.product) {
-        this.subscriptions.add(
-          this.productService
-            .editProduct(this.productId, this.form.value)
-            .pipe(finalize(() => (this.isLoading = false)))
-            .subscribe((data) => {
-              this.isLoading = false;
-            })
-        );
-      } else {
-        this.subscriptions.add(
-          this.productService
-            .addProduct(this.form.value)
-            .pipe(finalize(() => (this.isLoading = false)))
-            .subscribe((responseData) => {
-              this.isLoading = false;
-            })
-        );
-      }
+      this.isLoading = true;
+      this.subscriptions.add(
+        this.productService
+          .addProduct({
+            id: this.productId,
+            title: this.form.value.title,
+            content: this.form.value.content,
+            image: this.form.value.image,
+          })
+          .pipe(finalize(() => {
+            this.isLoading = false
+          }))
+          .subscribe((responseData) => {
+            this.isLoading = false;
+          })
+      );
+
     }
   }
 
-  onImagePicked(event:Event){
+  onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({image:file});
+    this.form.patchValue({ image: file });
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result as string;
-      console.log(this.imagePreview)
     };
-    reader.readAsDataURL(file)
+    reader.readAsDataURL(file);
     this.uploadImage = true;
   }
 }

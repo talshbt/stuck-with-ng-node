@@ -16,14 +16,6 @@ var db = "mongodb+srv://talp:@FadSJwF98NtMuk@cluster0.vbnc3.mongodb.net/node-ang
         console.log("Connected to the mongodb");
 });
 
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://talp2:@FadSJwF98NtMuk@cluster0.vbnc3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

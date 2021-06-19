@@ -31,7 +31,12 @@
       <input (change)="onImagePicked($event)" type="file" #filePicker />
     </div>
 
-    <img *ngIf="imagePreview" mat-card-image [src]="imagePreview" [alt]="form.get('title')">
+    <img
+      *ngIf="imagePreview"
+      mat-card-image
+      [src]="imagePreview"
+      [alt]="form.get('title')"
+    />
 
     <button mat-raised-button color="accent" type="submit">Save Post</button>
   </mat-card>

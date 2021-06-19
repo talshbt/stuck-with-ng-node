@@ -40,6 +40,8 @@ export class ProductService {
   }
 
   addProduct(product: Product) {
+
+    console.log(product)
     return this.http
       .post<{ message: string; productId: string }>(
         'http://localhost:3000/api/products',
@@ -47,6 +49,7 @@ export class ProductService {
       )
       .pipe(
         map((productData) => {
+          console.log(productData)
           this.getProducts();
         })
       );
