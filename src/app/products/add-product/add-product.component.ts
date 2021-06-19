@@ -20,15 +20,11 @@ export class AddProductComponent implements OnInit, OnDestroy {
   fileAttr: 'Choose Image'
   uploadImage = false;
   private subscriptions = new Subscription();
+  imagePreview:string;
 
   ngOnInit(): void {
     this.createFormGroup();
-
     this.handleAction();
-  }
-
-  uploadFileEvt(file){
-
   }
 
   private createFormGroup() {
@@ -37,10 +33,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.minLength(3)]
       }),
       content: new FormControl(null, { validators: [Validators.required] }),
-      // image: new FormControl(null, {
-      //   validators: [Validators.required],
-      //   asyncValidators: [mimeType]
-      // })
+       image: new FormControl(null, {
+        validators: [Validators.required]
+       })
     });
   }
 
@@ -101,8 +96,15 @@ export class AddProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  onImagePicked(x){
+  onImagePicked(event:Event){
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({image:file});
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+      console.log(this.imagePreview)
+    };
+    reader.readAsDataURL(file)
     this.uploadImage = true;
-    console.log(x)
   }
 }

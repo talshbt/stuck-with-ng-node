@@ -31,7 +31,7 @@
       <input (change)="onImagePicked($event)" type="file" #filePicker />
     </div>
 
-    <img *ngIf="uploadImage" mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <img *ngIf="imagePreview" mat-card-image [src]="imagePreview" [alt]="form.get('title')">
 
     <button mat-raised-button color="accent" type="submit">Save Post</button>
   </mat-card>
