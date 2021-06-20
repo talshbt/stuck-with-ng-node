@@ -8,11 +8,19 @@
         type="text"
         placeholder="Post Title"
       />
-
-      <mat-error *ngIf="form.get('title').invalid"
-        >Please enter a post title.</mat-error
-      >
+      <mat-error *ngIf="form.get('title').invalid">
+        Please enter a post title.
+      </mat-error>
     </mat-form-field>
+    <div class="upload">
+      <button (click)="filePicker.click()" mat-stroked-button type="button">
+        <mat-icon>add_a_photo</mat-icon>
+      </button>
+      <input (change)="onImagePicked($event)" type="file" #filePicker />
+    </div>
+    <div *ngIf="imagePreview" class="image-preview">
+      <img mat-card-image [src]="imagePreview" [alt]="form.get('title')" />
+    </div>
     <mat-form-field>
       <textarea
         formControlName="content"
@@ -21,23 +29,9 @@
         placeholder="Post Content"
       ></textarea>
       <mat-error *ngIf="form.get('content').invalid"
-        >Please enter a post title.</mat-error
-      >
+        >Please enter a post title.
+      </mat-error>
     </mat-form-field>
-    <div class="upload">
-      <button (click)="filePicker.click()" mat-stroked-button type="button">
-        <mat-icon>add_a_photo</mat-icon>
-      </button>
-      <input (change)="onImagePicked($event)" type="file" #filePicker />
-    </div>
-
-    <img
-      *ngIf="imagePreview"
-      mat-card-image
-      [src]="imagePreview"
-      [alt]="form.get('title')"
-    />
-
     <button mat-raised-button color="accent" type="submit">Save Post</button>
   </mat-card>
 </form>
