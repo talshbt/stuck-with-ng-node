@@ -19,7 +19,7 @@
       <input (change)="onImagePicked($event)" type="file" #filePicker />
     </div>
     <div *ngIf="imagePreview" class="image-preview">
-      <img mat-card-image [src]="imagePreview" [alt]="form.get('title')" />
+      <img [src]="imagePreview" [alt]="form.get('title')" />
     </div>
     <mat-form-field>
       <textarea

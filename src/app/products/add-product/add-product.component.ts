@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
+import { mimeType } from './mime-type.validator';
 
 @Component({
   selector: 'app-add-product',
@@ -33,7 +34,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.minLength(3)],
       }),
       content: new FormControl(null, { validators: [Validators.required] }),
-      image: new FormControl(null),
+      image: new FormControl(null , {validators:[Validators.required] , asyncValidators: [mimeType]}),
     });
   }
 

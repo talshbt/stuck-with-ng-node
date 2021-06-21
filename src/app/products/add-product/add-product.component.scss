@@ -1,4 +1,4 @@
-@import '../../../styles';
+@import "../../../styles";
 
 .mat-card {
   display: flex;
@@ -6,19 +6,23 @@
   align-items: flex-start;
 }
 
-
 mat-spinner {
   margin: auto;
 }
+
 input[type="file"] {
   visibility: hidden;
 }
 
-.upload{
-  margin:3rem 0;
+.upload {
+  margin: 3rem 0;
 }
 
-.image-preview{
-  // height: 5rem;
-  // margin:1rem;
+.image-preview {
+  height: 30vh;
+  margin: 1rem 0;
+}
+
+.image-preview img {
+  height: 100%;
 }
