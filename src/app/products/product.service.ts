@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { title } from 'process';
 import { map } from 'rxjs/operators';
 import { Product } from './product.model';
 import { ProductsStore } from './store/products.store';
@@ -40,16 +41,22 @@ export class ProductService {
   }
 
   addProduct(product: Product) {
+    //combine blob and text values
 
-    console.log(product)
+    const postData = new FormData();
+    postData.append("title", title);
+    postData.append("content", product.content);
+    postData.append("image", product.image, title);
+    postData.append('id', product.id)
+
     return this.http
       .post<{ message: string; productId: string }>(
         'http://localhost:3000/api/products',
-        product
+        postData
       )
       .pipe(
-        map((productData) => {
-          console.log(productData)
+        map((responseData) => {
+          console.log(responseData)
           this.getProducts();
         })
       );
