@@ -18,9 +18,13 @@
       </button>
       <input (change)="onImagePicked($event)" type="file" #filePicker />
     </div>
-    <div *ngIf="imagePreview" class="image-preview">
+    <div *ngIf="imagePreview && form.get('image').valid" class="image-preview">
       <img [src]="imagePreview" [alt]="form.get('title')" />
     </div>
+
+    <mat-error *ngIf="form.get('image').invalid">
+      Please Upload Valid Image
+    </mat-error>
     <mat-form-field>
       <textarea
         formControlName="content"

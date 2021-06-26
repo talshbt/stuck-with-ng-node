@@ -34,7 +34,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
         validators: [Validators.required, Validators.minLength(3)],
       }),
       content: new FormControl(null, { validators: [Validators.required] }),
-      image: new FormControl(null , {validators:[Validators.required] , asyncValidators: [mimeType]}),
+      image: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [mimeType]
+      })
     });
   }
 
@@ -75,8 +78,11 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   onAddProduct() {
+    console.log('onAddProduct')
+    console.log(this.form.valid)
 
     if (this.form.valid) {
+
       this.isLoading = true;
       this.subscriptions.add(
         this.productService
@@ -94,6 +100,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
           })
       );
 
+    }else{
+      console.log("form.value false" , this.form.value)
     }
   }
 
