@@ -31,6 +31,7 @@ export class ProductService {
               title: product.title,
               content: product.content,
               id: product._id,
+              imagePath: product.imagePath
             };
           });
         })
@@ -40,7 +41,7 @@ export class ProductService {
       });
   }
 
-  addProduct(product: Product) {
+  addProduct(product) {
     //combine blob and text values
 
     const postData = new FormData();
