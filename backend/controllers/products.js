@@ -52,8 +52,12 @@ router.post(
   "",
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
+    console.log(req.file)
     if (!req.body._id) {
-      addProduct(req.body, res);
+      const url = req.protocol + "://" + req.get("host");
+      const imagePath = url + "/images/" + req.file.filename
+
+      addProduct(req.body, res, imagePath);
     } else {
       editProduct(req.body, res);
     }
@@ -96,13 +100,14 @@ async function editProduct(productData, res) {
     .catch((err) => console.error(err));
 }
 
-async function addProduct(productData, res) {
+async function addProduct(productData, res, imagePath) {
   try {
-    console.log("addProduct");
+    console.log(imagePath);
+
     const product = new Product({
       title: productData.title,
       content: productData.content,
-      // image: productData.image
+      imagePath: imagePath
     });
 
     const results = await product.save();
