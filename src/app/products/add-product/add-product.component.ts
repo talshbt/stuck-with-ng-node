@@ -22,7 +22,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
   uploadImage = false;
   private subscriptions = new Subscription();
   imagePreview: string;
-  editMode = false;
 
   ngOnInit(): void {
     this.createFormGroup();
@@ -37,16 +36,17 @@ export class AddProductComponent implements OnInit, OnDestroy {
       content: new FormControl(null, { validators: [Validators.required] }),
       image: new FormControl(null, {
         validators: [Validators.required],
-        asyncValidators: [mimeType]
-      })
+        asyncValidators: [mimeType],
+      }),
     });
   }
 
   private handleAction() {
     this.subscriptions.add(
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
+        this.productId = null;
+        this.product = null;
         if (paramMap.has('productId')) {
-          this.editMode = true;
           this.isLoading = true;
           this.productId = paramMap.get('productId');
           this.subscriptions.add(
@@ -54,7 +54,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
               .getProduct(this.productId)
               .pipe(finalize(() => (this.isLoading = false)))
               .subscribe((product) => {
-                this.imagePreview = product?.imagePath
+                this.imagePreview = product?.imagePath;
                 this.product = product;
                 this.form.setValue({
                   title: product?.title,
@@ -63,10 +63,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
                 });
               })
           );
-        } else {
-          this.editMode = false;
-          this.productId = null;
-          this.product = null;
         }
       })
     );
@@ -82,11 +78,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   onAddProduct() {
-    console.log('onAddProduct')
-    console.log(this.form.valid)
-
+    console.log('onAddProduct');
+    console.log(this.form.valid);
+    console.log(this.form.value.image)
     if (this.form.valid) {
-
       this.isLoading = true;
       this.subscriptions.add(
         this.productService
@@ -96,14 +91,15 @@ export class AddProductComponent implements OnInit, OnDestroy {
             content: this.form.value.content,
             image: this.form.value.image,
           })
-          .pipe(finalize(() => {
-            this.isLoading = false
-          }))
+          .pipe(
+            finalize(() => {
+              this.isLoading = false;
+            })
+          )
           .subscribe((responseData) => {
             this.isLoading = false;
           })
       );
-
     }
   }
 
