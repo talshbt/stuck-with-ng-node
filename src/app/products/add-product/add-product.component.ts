@@ -22,6 +22,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
   uploadImage = false;
   private subscriptions = new Subscription();
   imagePreview: string;
+  editMode = false;
 
   ngOnInit(): void {
     this.createFormGroup();
@@ -45,6 +46,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
         if (paramMap.has('productId')) {
+          this.editMode = true;
           this.isLoading = true;
           this.productId = paramMap.get('productId');
           this.subscriptions.add(
@@ -52,15 +54,17 @@ export class AddProductComponent implements OnInit, OnDestroy {
               .getProduct(this.productId)
               .pipe(finalize(() => (this.isLoading = false)))
               .subscribe((product) => {
+                this.imagePreview = product?.imagePath
                 this.product = product;
                 this.form.setValue({
                   title: product?.title,
                   content: product?.content,
-                  image: null,
+                  image: product?.imagePath,
                 });
               })
           );
         } else {
+          this.editMode = false;
           this.productId = null;
           this.product = null;
         }
@@ -100,8 +104,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
           })
       );
 
-    }else{
-      console.log("form.value false" , this.form.value)
     }
   }
 

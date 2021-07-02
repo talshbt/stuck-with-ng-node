@@ -47,7 +47,7 @@ router.get("", (req, res, next) => {
   });
 });
 
-//add new product
+//add or edit new product
 router.post(
   "",
   multer({ storage: storage }).single("image"),
@@ -58,7 +58,7 @@ router.post(
 
       addProduct(req.body, res, imagePath);
     } else {
-      editProduct(req.body, res);
+      editProduct(req.body, res, imagePath);
     }
   }
 );
@@ -85,11 +85,12 @@ router.get("/:id", (req, res, next) => {
   });
 });
 
-async function editProduct(productData, res) {
+async function editProduct(productData, res, imagePath) {
   const product = new Product({
     _id: productData.id,
     title: productData.title,
     content: productData.content,
+    imagePath:imagePath
   });
 
   Product.updateOne({ _id: productData.id }, product)
