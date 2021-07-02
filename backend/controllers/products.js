@@ -52,7 +52,6 @@ router.post(
   "",
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
-    console.log(req.file)
     if (!req.body._id) {
       const url = req.protocol + "://" + req.get("host");
       const imagePath = url + "/images/" + req.file.filename
@@ -102,7 +101,7 @@ async function editProduct(productData, res) {
 
 async function addProduct(productData, res, imagePath) {
   try {
-    console.log(imagePath);
+    console.log(productData);
 
     const product = new Product({
       title: productData.title,

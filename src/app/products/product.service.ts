@@ -37,6 +37,7 @@ export class ProductService {
         })
       )
       .subscribe((products) => {
+        console.log(products)
         this.productsStore.getProducts$(products);
       });
   }
@@ -45,7 +46,8 @@ export class ProductService {
     //combine blob and text values
 
     const postData = new FormData();
-    postData.append("title", title);
+    console.log(product)
+    postData.append("title", product.title);
     postData.append("content", product.content);
     postData.append("image", product.image, title);
     postData.append('id', product.id)

@@ -1,13 +1,18 @@
 <!-- <div>{{ product | json}}</div>
 <button (click)=onRemove()>Remove</button> -->
 
-<mat-expansion-panel >
+<mat-expansion-panel>
   <mat-expansion-panel-header>
     {{ product.title }}
   </mat-expansion-panel-header>
   <p>{{ product.content }}</p>
+  <div class="post-image">
+    <img [src]="product.imagePath" [alt]="product.title"/>
+  </div>
   <mat-action-row>
-    <button mat-button color="primary" [routerLink]="['/edit', product.id]">EDIT</button>
-    <button mat-button color="warn" (click)=onRemove()>DELETE</button>
+    <button mat-button color="primary" [routerLink]="['/edit', product.id]">
+      EDIT
+    </button>
+    <button mat-button color="warn" (click)="onRemove()">DELETE</button>
   </mat-action-row>
 </mat-expansion-panel>
