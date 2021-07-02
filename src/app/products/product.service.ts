@@ -31,26 +31,39 @@ export class ProductService {
               title: product.title,
               content: product.content,
               id: product._id,
-              imagePath: product.imagePath
+              imagePath: product.imagePath,
             };
           });
         })
       )
       .subscribe((products) => {
-        console.log(products)
+        console.log(products);
         this.productsStore.getProducts$(products);
       });
   }
 
-  addProduct(product) {
+  addProduct(product, mode) {
     //combine blob and text values
 
-    const postData = new FormData();
-    console.log(product)
-    postData.append("title", product.title);
-    postData.append("content", product.content);
-    postData.append("image", product.image, title);
-    postData.append('id', product.id)
+    let postData;
+    if (typeof product.image == 'object') {
+      postData = new FormData();
+      console.log('upload new file');
+      postData.append('title', product.title);
+      postData.append('content', product.content);
+      postData.append('image', product.image, title);
+      postData.append('id', product.id);
+    } else {
+      postData = {
+        id: product.id,
+        title: product.title,
+        content: product.content,
+        imagePath: product.image,
+      };
+      console.log('same file');
+    }
+
+    console.log(postData);
 
     return this.http
       .post<{ message: string; productId: string }>(
@@ -59,7 +72,7 @@ export class ProductService {
       )
       .pipe(
         map((responseData) => {
-          console.log(responseData)
+          console.log(responseData);
           this.getProducts();
         })
       );
@@ -71,7 +84,6 @@ export class ProductService {
       .subscribe(() => {
         this.getProducts();
         this.router.navigate(['/'], { relativeTo: this.route });
-
       });
   }
 
@@ -88,14 +100,16 @@ export class ProductService {
   }
 
   editProduct(productId: string, product: Product) {
-    return this.http.put<{ message: string; product: any }>(
-      'http://localhost:3000/api/products/' + productId,
-      product
-    ).pipe(
-      map((productData) => {
-        this.getProducts();
-        this.router.navigate(['/'], { relativeTo: this.route });
-      })
-    );
+    return this.http
+      .put<{ message: string; product: any }>(
+        'http://localhost:3000/api/products/' + productId,
+        product
+      )
+      .pipe(
+        map((productData) => {
+          this.getProducts();
+          this.router.navigate(['/'], { relativeTo: this.route });
+        })
+      );
   }
 }

@@ -52,13 +52,10 @@ router.post(
   "",
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
-    if (!req.body._id) {
-      const url = req.protocol + "://" + req.get("host");
-      const imagePath = url + "/images/" + req.file.filename
-
-      addProduct(req.body, res, imagePath);
+    if (req.body.id == "null") {
+      addProduct(req, res);
     } else {
-      editProduct(req.body, res, imagePath);
+      editProduct(req, res);
     }
   }
 );
@@ -85,29 +82,36 @@ router.get("/:id", (req, res, next) => {
   });
 });
 
-async function editProduct(productData, res, imagePath) {
+async function editProduct(req, res) {
+  let imagePath = req.body.imagePath;
+
+  if (!req.body.imagePath) {
+    const url = req.protocol + "://" + req.get("host");
+    imagePath = url + "/images/" + req.file.filename;
+  }
+  console.log("image path = ", imagePath);
   const product = new Product({
-    _id: productData.id,
-    title: productData.title,
-    content: productData.content,
-    imagePath:imagePath
+    _id: req.body.id,
+    title: req.body.title,
+    content: req.body.content,
+    imagePath: imagePath,
   });
 
-  Product.updateOne({ _id: productData.id }, product)
+  Product.updateOne({ _id: req.body.id }, product)
     .then((result) => {
       res.status(200).json({ message: "Update successful!" });
     })
     .catch((err) => console.error(err));
 }
 
-async function addProduct(productData, res, imagePath) {
+async function addProduct(req, res) {
   try {
-    console.log(productData);
-
+    const url = req.protocol + "://" + req.get("host");
+    const imagePath = url + "/images/" + req.file.filename;
     const product = new Product({
-      title: productData.title,
-      content: productData.content,
-      imagePath: imagePath
+      title: req.body.title,
+      content: req.body.content,
+      imagePath: imagePath,
     });
 
     const results = await product.save();
