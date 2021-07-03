@@ -1,3 +1,4 @@
-.products-list{
+.products-list, mat-paginator{
   margin-top:1rem;
 }
+
