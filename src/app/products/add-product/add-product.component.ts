@@ -78,14 +78,10 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   onAddProduct() {
-    console.log('onAddProduct');
-    console.log(this.form.valid);
-    console.log(this.form.value.image)
     if (this.form.valid) {
       this.isLoading = true;
       this.subscriptions.add(
-        this.productService
-          .addProduct({
+        this.productService.addProduct({
             id: this.productId,
             title: this.form.value.title,
             content: this.form.value.content,
@@ -100,6 +96,8 @@ export class AddProductComponent implements OnInit, OnDestroy {
             this.isLoading = false;
           })
       );
+
+      this.router.navigate(['/']);
     }
   }
 

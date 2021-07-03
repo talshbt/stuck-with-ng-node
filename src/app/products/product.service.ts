@@ -42,7 +42,7 @@ export class ProductService {
       });
   }
 
-  addProduct(product, mode) {
+  addProduct(product) {
     //combine blob and text values
 
     let postData;
