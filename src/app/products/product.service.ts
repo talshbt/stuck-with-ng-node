@@ -49,34 +49,6 @@ export class ProductService {
       });
   }
 
-  getProductsPerPage(pageData) {
-    let params = new HttpParams();
-
-    params = params.append('pageIndex', pageData.pageIndex);
-    params = params.append('pageSize', pageData.pageSize);
-
-    return this.http
-      .get<{ message: string; products: any }>(
-        'http://localhost:3000/api/products',
-        { params: params }
-      )
-      .pipe(
-        map((postData) => {
-          return postData.products.map((product) => {
-            return {
-              title: product.title,
-              content: product.content,
-              id: product._id,
-              imagePath: product.imagePath,
-            };
-          });
-        })
-      )
-      .subscribe((products) => {
-        this.productsStore.getProducts$(products);
-      });
-  }
-
   addProduct(product) {
     //combine blob and text values
     console.log(product);

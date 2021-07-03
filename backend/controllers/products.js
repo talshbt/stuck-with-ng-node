@@ -39,7 +39,7 @@ const storage = multer.diskStorage({
 
 //get all products
 router.get("", (req, res, next) => {
-  console.log(req.query)
+  // {pageIndex: 0, pageSize:2};
   Product.find().then((documents) => {
     res.status(200).json({
       message: "product fetched successfully!",
@@ -124,17 +124,3 @@ async function addProduct(req, res) {
 }
 module.exports = router;
 
-//edit product
-// router.put("/:id", (req, res, next) => {
-//   const product = new Product({
-//     _id: req.params.id,
-//     title: req.body.title,
-//     content: req.body.content,
-//   });
-
-//   Product.updateOne({ _id: req.params.id }, product)
-//     .then((result) => {
-//       res.status(200).json({ message: "Update successful!" });
-//     })
-//     .catch((err) => console.error(err));
-// });

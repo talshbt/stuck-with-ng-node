@@ -22,6 +22,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
   uploadImage = false;
   private subscriptions = new Subscription();
   imagePreview: string;
+  // pageData =
 
   ngOnInit(): void {
     this.createFormGroup();

@@ -23,10 +23,7 @@ export class ProductsListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // getProductsPerPage(productsData)
-
   onChangePage(pageData: PageEvent){
-
     let newPageData : Page = {pageIndex: pageData.pageIndex, pageSize: pageData.pageSize};
     this.productService.getProducts(newPageData);
   }
