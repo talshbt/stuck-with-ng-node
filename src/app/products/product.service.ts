@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { title } from 'process';
 import { map } from 'rxjs/operators';
+import { Page } from './page.model';
 import { Product } from './product.model';
 import { ProductsStore } from './store/products.store';
 
@@ -11,6 +12,7 @@ import { ProductsStore } from './store/products.store';
 })
 export class ProductService {
   products$ = this.productsStore.products$;
+  pageData : Page = {pageIndex: 0, pageSize: 2};
 
   constructor(
     private readonly productsStore: ProductsStore,
@@ -19,10 +21,15 @@ export class ProductService {
     private router: Router
   ) {}
 
-  getProducts() {
+  getProducts(pageData) {
+    let params = new HttpParams();
+
+    params = params.append('pageIndex', pageData.pageIndex);
+    params = params.append('pageSize', pageData.pageSize);
     return this.http
       .get<{ message: string; products: any }>(
-        'http://localhost:3000/api/products'
+        'http://localhost:3000/api/products',
+        { params: params }
       )
       .pipe(
         map((postData) => {
@@ -42,9 +49,37 @@ export class ProductService {
       });
   }
 
+  getProductsPerPage(pageData) {
+    let params = new HttpParams();
+
+    params = params.append('pageIndex', pageData.pageIndex);
+    params = params.append('pageSize', pageData.pageSize);
+
+    return this.http
+      .get<{ message: string; products: any }>(
+        'http://localhost:3000/api/products',
+        { params: params }
+      )
+      .pipe(
+        map((postData) => {
+          return postData.products.map((product) => {
+            return {
+              title: product.title,
+              content: product.content,
+              id: product._id,
+              imagePath: product.imagePath,
+            };
+          });
+        })
+      )
+      .subscribe((products) => {
+        this.productsStore.getProducts$(products);
+      });
+  }
+
   addProduct(product) {
     //combine blob and text values
-
+    console.log(product);
     let postData;
     if (typeof product.image == 'object') {
       postData = new FormData();
@@ -62,9 +97,6 @@ export class ProductService {
       };
       console.log('same file');
     }
-
-    console.log(postData);
-
     return this.http
       .post<{ message: string; productId: string }>(
         'http://localhost:3000/api/products',
@@ -73,7 +105,8 @@ export class ProductService {
       .pipe(
         map((responseData) => {
           console.log(responseData);
-          this.getProducts();
+          this.getProducts(null);
+          this.router.navigate(['/'], { relativeTo: this.route });
         })
       );
   }
@@ -82,7 +115,7 @@ export class ProductService {
     this.http
       .delete('http://localhost:3000/api/products/' + productId)
       .subscribe(() => {
-        this.getProducts();
+        this.getProducts(null);
         this.router.navigate(['/'], { relativeTo: this.route });
       });
   }
@@ -107,7 +140,7 @@ export class ProductService {
       )
       .pipe(
         map((productData) => {
-          this.getProducts();
+          this.getProducts(null);
           this.router.navigate(['/'], { relativeTo: this.route });
         })
       );

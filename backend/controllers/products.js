@@ -39,6 +39,7 @@ const storage = multer.diskStorage({
 
 //get all products
 router.get("", (req, res, next) => {
+  console.log(req.query)
   Product.find().then((documents) => {
     res.status(200).json({
       message: "product fetched successfully!",
@@ -52,6 +53,7 @@ router.post(
   "",
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
+    console.log(req.body)
     if (req.body.id == "null") {
       addProduct(req, res);
     } else {

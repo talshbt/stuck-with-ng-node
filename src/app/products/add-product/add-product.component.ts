@@ -97,7 +97,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
           })
       );
 
-      this.router.navigate(['/']);
     }
   }
 

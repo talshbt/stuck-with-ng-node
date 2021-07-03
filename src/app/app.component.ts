@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Page } from './products/page.model';
 import { ProductService } from './products/product.service';
 import { ProductsStore } from './products/store/products.store';
 
@@ -18,7 +19,9 @@ export class AppComponent {
     private readonly productsStore: ProductsStore,
     private productService: ProductService
   ) {
-    this.productService.getProducts();
+    let newPageData : Page = {pageIndex: 0, pageSize:2};
+
+    this.productService.getProducts(newPageData);
     // this.productService.getProducts().subscribe(products=>{
     //   // console.log(products)
     //  this.productsStore.getProducts$(products);
