@@ -6,13 +6,7 @@ const router = express.Router();
 const multer = require("multer");
 const { forEachLeadingCommentRange } = require("typescript");
 
-// const MIME_TYPE_MAP = {
-//   'image/png' :'png',
-//   'image/jpeg' :'jpg',
-//   'image/jpg' :'jpg'
-// }
-
-// // define where multer put files from request. diskstorage confige how multer store things
+// define where multer put files from request. diskstorage confige how multer store things
 
 const MIME_TYPE_MAP = {
   "image/png": "png",
@@ -38,14 +32,26 @@ const storage = multer.diskStorage({
 });
 
 //get all products
-router.get("", (req, res, next) => {
-  // {pageIndex: 0, pageSize:2};
-  Product.find().then((documents) => {
+router.get("", async (req, res, next) => {
+
+  try{
+    const pageIndex = +req.query.pageIndex;
+    const pageSize = +req.query.pageSize;
+    let collectionSize  = await Product.countDocuments();
+    collection = await Product.find().skip(pageSize * pageIndex).limit(pageSize);
+
     res.status(200).json({
-      message: "product fetched successfully!",
-      products: documents,
+        message: "product fetched successfully!",
+        products: collection,
+        productsLens : collectionSize
+      });
+  }
+  catch(err){
+    res.status(500).json({
+      message: "product fetched failed!",
+      errMessage: err.message
     });
-  });
+  }
 });
 
 //add or edit new product
@@ -53,8 +59,8 @@ router.post(
   "",
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
-    console.log(req.body)
-    if (req.body.id == "null") {
+    console.log(req.body);
+    if (Boolean(req.body.id)) {
       addProduct(req, res);
     } else {
       editProduct(req, res);
@@ -123,4 +129,3 @@ async function addProduct(req, res) {
   }
 }
 module.exports = router;
-

@@ -12,7 +12,7 @@ import { ProductsStore } from './store/products.store';
 })
 export class ProductService {
   products$ = this.productsStore.products$;
-  pageData : Page = {pageIndex: 0, pageSize: 2};
+  pageData: Page;
 
   constructor(
     private readonly productsStore: ProductsStore,
@@ -22,18 +22,19 @@ export class ProductService {
   ) {}
 
   getProducts(pageData) {
+    this.pageData = this.pageData ?? pageData;
+    console.log(this.pageData);
     let params = new HttpParams();
-
-    params = params.append('pageIndex', pageData.pageIndex);
-    params = params.append('pageSize', pageData.pageSize);
+    params = params.append('pageIndex', this.pageData.pageIndex.toString());
+    params = params.append('pageSize', this.pageData.pageSize.toString());
     return this.http
-      .get<{ message: string; products: any }>(
+      .get<{ message: string; products: any; productsLens: number }>(
         'http://localhost:3000/api/products',
         { params: params }
       )
       .pipe(
         map((postData) => {
-          return postData.products.map((product) => {
+          const products = postData.products.map((product) => {
             return {
               title: product.title,
               content: product.content,
@@ -41,11 +42,16 @@ export class ProductService {
               imagePath: product.imagePath,
             };
           });
+          const numberOfProducts = postData.productsLens;
+
+          return {
+            products: products,
+            numberOfProducts: postData.productsLens,
+          };
         })
       )
-      .subscribe((products) => {
-        console.log(products);
-        this.productsStore.getProducts$(products);
+      .subscribe((newPostData) => {
+        this.productsStore.getProducts$(newPostData.products);
       });
   }
 

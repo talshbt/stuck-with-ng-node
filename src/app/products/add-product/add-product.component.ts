@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { Page } from '../page.model';
 import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { mimeType } from './mime-type.validator';
@@ -22,7 +23,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
   uploadImage = false;
   private subscriptions = new Subscription();
   imagePreview: string;
-  // pageData =
 
   ngOnInit(): void {
     this.createFormGroup();
