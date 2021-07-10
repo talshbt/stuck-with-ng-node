@@ -13,6 +13,8 @@ import { ProductsStore } from '../store/products.store';
 export class ProductsListComponent implements OnInit {
 
   products$ = this.productsStore.products$;
+  numberOfProducts$ = this.productsStore.numberOfProducts$;
+
   productsPerPage = 2;
   // dropdown for user to select products per page
   pageSizeOptions = [1, 2, 5, 10]

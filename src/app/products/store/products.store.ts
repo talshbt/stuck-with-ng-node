@@ -5,6 +5,7 @@ import { Product } from "../product.model";
 
 export interface ProductsState  {
   products: Product[];
+  numberOfProducts: number;
   // currentId : string;
 }
 
@@ -13,8 +14,9 @@ export interface ProductsState  {
   providedIn: 'root'
 })
 export class ProductsStore extends ComponentStore<ProductsState> {
+  [x: string]: any;
   constructor() {
-    super({products: []});
+    super({products: [], numberOfProducts:0});
   }
 
   readonly getProducts$ = this.updater(
@@ -25,6 +27,15 @@ export class ProductsStore extends ComponentStore<ProductsState> {
              products: products,
         };
     }
+);
+readonly getNumberOfProducts$ = this.updater(
+  (state: ProductsState, numberOfProducts:number) => {
+    state.numberOfProducts = numberOfProducts
+      return {
+          ...state,
+          numberOfProducts: numberOfProducts,
+      };
+  }
 );
 
 //   readonly add$ = this.updater(
@@ -51,6 +62,8 @@ export class ProductsStore extends ComponentStore<ProductsState> {
 //     }
 // );
   readonly products$: Observable<any> = this.select((state) => state.products);
+  readonly numberOfProducts$: Observable<any> = this.select((state) => state.numberOfProducts);
+
   // readonly currentId$: Observable<string> = this.select((state) => state.currentId);
 
 

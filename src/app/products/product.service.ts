@@ -22,8 +22,7 @@ export class ProductService {
   ) {}
 
   getProducts(pageData) {
-    this.pageData = this.pageData ?? pageData;
-    console.log(this.pageData);
+    this.pageData = pageData ?? this.pageData;
     let params = new HttpParams();
     params = params.append('pageIndex', this.pageData.pageIndex.toString());
     params = params.append('pageSize', this.pageData.pageSize.toString());
@@ -52,6 +51,7 @@ export class ProductService {
       )
       .subscribe((newPostData) => {
         this.productsStore.getProducts$(newPostData.products);
+        this.productsStore.getNumberOfProducts$(newPostData.numberOfProducts)
       });
   }
 

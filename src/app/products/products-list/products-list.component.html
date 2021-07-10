@@ -7,5 +7,5 @@
   <div>No Products Yet</div>
 </ng-template>
 
-<mat-paginator [length]="(products$ | async).length" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangePage($event)"></mat-paginator>
-<!-- <div *ngIf="(products$ | async).length">{{(products$ | async)|json}}</div> -->
+<mat-paginator [length]="(numberOfProducts$ | async)" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangePage($event)"></mat-paginator>
+<!-- <div *ngIf="(products$ | async).length">{{(numberOfProducts$ | async)|json}}</div> -->

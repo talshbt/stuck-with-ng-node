@@ -37,6 +37,9 @@ router.get("", async (req, res, next) => {
   try{
     const pageIndex = +req.query.pageIndex;
     const pageSize = +req.query.pageSize;
+    console.log('pageIndex', '= ',pageIndex)
+    console.log('pageSize', '= ',pageSize)
+
     let collectionSize  = await Product.countDocuments();
     collection = await Product.find().skip(pageSize * pageIndex).limit(pageSize);
 
