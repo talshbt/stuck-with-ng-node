@@ -14,9 +14,9 @@ export class ProductsListComponent implements OnInit {
 
   products$ = this.productsStore.products$;
   numberOfProducts$ = this.productsStore.numberOfProducts$;
+  isLoading$ = this.productsStore.isLoading$;
 
   productsPerPage = 2;
-  // dropdown for user to select products per page
   pageSizeOptions = [1, 2, 5, 10]
   constructor(private readonly productsStore: ProductsStore,  private productService: ProductService,
     ) {
