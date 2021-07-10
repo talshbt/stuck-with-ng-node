@@ -2,7 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { title } from 'process';
-import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
 import { Page } from './page.model';
 import { Product } from './product.model';
 import { ProductsStore } from './store/products.store';
@@ -13,6 +14,8 @@ import { ProductsStore } from './store/products.store';
 export class ProductService {
   products$ = this.productsStore.products$;
   pageData: Page;
+  private productsUpdated = new Subject<any>();
+
 
   constructor(
     private readonly productsStore: ProductsStore,
@@ -22,6 +25,7 @@ export class ProductService {
   ) {}
 
   getProducts(pageData) {
+    this.productsStore.getIsLoading$(true);
     this.pageData = pageData ?? this.pageData;
     let params = new HttpParams();
     params = params.append('pageIndex', this.pageData.pageIndex.toString());
@@ -48,10 +52,15 @@ export class ProductService {
             numberOfProducts: postData.productsLens,
           };
         })
+      ).pipe(
+        finalize(() => {
+          this.productsStore.getIsLoading$(false);
+        })
       )
       .subscribe((newPostData) => {
         this.productsStore.getProducts$(newPostData.products);
         this.productsStore.getNumberOfProducts$(newPostData.numberOfProducts)
+        // this.prod
       });
   }
 

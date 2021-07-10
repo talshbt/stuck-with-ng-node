@@ -6,6 +6,7 @@ import { Product } from "../product.model";
 export interface ProductsState  {
   products: Product[];
   numberOfProducts: number;
+  isLoading:boolean;
   // currentId : string;
 }
 
@@ -16,7 +17,7 @@ export interface ProductsState  {
 export class ProductsStore extends ComponentStore<ProductsState> {
   [x: string]: any;
   constructor() {
-    super({products: [], numberOfProducts:0});
+    super({products: [], numberOfProducts:0, isLoading:false});
   }
 
   readonly getProducts$ = this.updater(
@@ -38,33 +39,19 @@ readonly getNumberOfProducts$ = this.updater(
   }
 );
 
-//   readonly add$ = this.updater(
-//       (state: ProductsState, product: Product) => {
-//         // state.currentId++;
-//         // product.id = state.currentId;
-//         state.products.push(product)
-//           return {
-//               ...state,
-//                products: state.products,
-//           };
-//       }
-//   );
 
-//   readonly remove$ = this.updater(
-//     (state: ProductsState, product: Product) => {
-//       var find = state.products.indexOf(state.products.find(prod=> prod.id === product.id))
-//        state.products.splice(find, 1)
+readonly getIsLoading$ = this.updater(
+  (state: ProductsState, isLoading:boolean) => {
+    state.isLoading = isLoading
+      return {
+          ...state,
+          isLoading: isLoading,
+      };
+  }
+);
 
-//         return {
-//             ...state,
-//              products: state.products,
-//         };
-//     }
-// );
   readonly products$: Observable<any> = this.select((state) => state.products);
   readonly numberOfProducts$: Observable<any> = this.select((state) => state.numberOfProducts);
-
-  // readonly currentId$: Observable<string> = this.select((state) => state.currentId);
-
+  readonly isLoading$: Observable<any> = this.select((state) => state.isLoading);
 
 }

@@ -14,15 +14,22 @@ export class ProductsListComponent implements OnInit {
 
   products$ = this.productsStore.products$;
   numberOfProducts$ = this.productsStore.numberOfProducts$;
+  isLoading$ = this.productsStore.isLoading$;
 
+  totalProducts = 0;
+  currentPage = 1;
   productsPerPage = 2;
-  // dropdown for user to select products per page
-  pageSizeOptions = [1, 2, 5, 10]
+  pageSizeOptions = [1, 2, 5, 10];
+  // isLoading = false;
+
   constructor(private readonly productsStore: ProductsStore,  private productService: ProductService,
     ) {
   }
 
   ngOnInit(): void {
+    // this.isLoading = true;
+    let newPageData: Page = {pageIndex: this.currentPage, pageSize: this.productsPerPage};
+    this.productService.getProducts(newPageData);
   }
 
   onChangePage(pageData: PageEvent){
