@@ -1,5 +1,5 @@
-<mat-spinner *ngIf="(isLoading$|async)"></mat-spinner>
-
+<mat-spinner *ngIf="(isLoading$|async); else showProducts"></mat-spinner>
+<ng-template #showProducts>
 <div class="products-list" *ngIf="(products$ | async).length as products; else empty">
   <mat-accordion *ngFor="let product of products$ | async">
     <app-product [product]="product"></app-product>
@@ -8,5 +8,6 @@
 <ng-template #empty>
   <div>No Products Yet</div>
 </ng-template>
+<mat-paginator *ngIf="!!(numberOfProducts$ | async)" [length]="(numberOfProducts$ | async)" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangePage($event)"></mat-paginator>
+</ng-template>
 
-<mat-paginator [length]="(numberOfProducts$ | async)" [pageSize]="productsPerPage" [pageSizeOptions]="pageSizeOptions" (page)="onChangePage($event)"></mat-paginator>
